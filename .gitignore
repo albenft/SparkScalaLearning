@@ -3,3 +3,6 @@
 */*.iml
 *app-logs*
 */target/*
+*/dataSink/*
+*/metastore_db/*
+*/spark-warehouse/*
