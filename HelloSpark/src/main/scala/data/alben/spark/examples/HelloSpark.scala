@@ -39,7 +39,7 @@ object HelloSpark extends Serializable {
 
     logger.info("Finished Hello Spark")
 
-    scala.io.StdIn.readLine()
+//    scala.io.StdIn.readLine()
     spark.stop()
   }
 
