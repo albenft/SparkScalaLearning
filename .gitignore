@@ -5,4 +5,4 @@
 */target/*
 */dataSink/*
 */metastore_db/*
-*/spark_warehouse/*
+*/spark-warehouse/*
