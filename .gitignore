@@ -1,0 +1,5 @@
+*/.idea/*
+*project
+*/*.iml
+*app-logs*
+*/target/*
