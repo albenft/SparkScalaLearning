@@ -3,3 +3,4 @@
 */*.iml
 *app-logs*
 */target/*
+*/dataSink/*
