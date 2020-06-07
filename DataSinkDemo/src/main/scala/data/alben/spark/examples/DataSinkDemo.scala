@@ -1,7 +1,7 @@
 package data.alben.spark.examples
 
 import org.apache.log4j.Logger
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{SaveMode, SparkSession}
 
 object DataSinkDemo extends Serializable {
 
@@ -22,12 +22,32 @@ object DataSinkDemo extends Serializable {
 
     logger.info("Num of Partitions before: " + flightTimeParquet.rdd.getNumPartitions)
     import org.apache.spark.sql.functions.spark_partition_id
-    flightTimeParquet.groupBy(spark_partition_id()).count().show()
+//    flightTimeParquet.groupBy(spark_partition_id()).count().show()
+
+//    flightTimeParquet.write
+//      .format("avro")
+//      .mode(SaveMode.Overwrite)
+//      .option("path", "dataSink/avro/")
+//      .save()
 
     val partitionedDf = flightTimeParquet.repartition(5)
 
     logger.info("Num of Partitions after: " + partitionedDf.rdd.getNumPartitions)
     partitionedDf.groupBy(spark_partition_id()).count().show()
+//
+//    partitionedDf.write
+//      .format("avro")
+//      .mode(SaveMode.Overwrite)
+//      .option("path", "dataSink/avro/")
+//      .save()
+
+    flightTimeParquet.write
+      .format("json")
+      .mode(SaveMode.Overwrite)
+      .option("path", "dataSink/json/")
+      .partitionBy("OP_CARRIER", "ORIGIN")
+      .option("maxRecordsPerFile", 10000)
+      .save()
 
     logger.info("Finished DataSinkDemo")
     spark.stop()
