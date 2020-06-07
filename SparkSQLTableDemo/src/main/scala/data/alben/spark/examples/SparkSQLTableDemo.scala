@@ -26,10 +26,15 @@ object SparkSQLTableDemo extends Serializable {
     spark.catalog.setCurrentDatabase("AIRLINE_DB")
 
     flightTimeDf.write
+//      .format("parquet")
+      .format("csv")
       .mode(SaveMode.Overwrite)
+//      .partitionBy("ORIGIN", "OP_CARRIER")
+      .bucketBy(5, "ORIGIN", "OP_CARRIER")
+      .sortBy("ORIGIN", "OP_CARRIER")
       .saveAsTable("flight_time_tbl")
 
-    spark.catalog.listTables("AIRLINE_DB")
+    spark.catalog.listTables("AIRLINE_DB").show()
 
     logger.info("Finished SparkSQLTableDemo")
     spark.stop()
